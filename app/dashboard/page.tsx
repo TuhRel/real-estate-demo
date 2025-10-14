@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth, db } from '@/lib/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -11,14 +11,14 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Home, Heart, Calendar, FileText, Upload, Settings } from 'lucide-react';
 import PropertyCard from '@/components/PropertyCard';
+import { Property, Appointment } from '@/types';
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
-  const [userData, setUserData] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [savedProperties, setSavedProperties] = useState<any[]>([]);
-  const [appointments, setAppointments] = useState<any[]>([]);
+  const [savedProperties] = useState<Property[]>([]);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -28,10 +28,9 @@ export default function DashboardPage() {
         // Fetch user data from Firestore
         const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
         if (userDoc.exists()) {
-          setUserData(userDoc.data());
+          // User data loaded
         }
         
-        // Fetch saved properties
         // TODO: Implement actual query based on savedListings
         
         // Fetch appointments
@@ -43,7 +42,7 @@ export default function DashboardPage() {
         const appointmentsData = appointmentsSnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
-        }));
+        })) as Appointment[];
         setAppointments(appointmentsData);
         
         setLoading(false);
@@ -74,7 +73,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Avatar className="h-16 w-16">
-                <AvatarImage src={user?.photoURL} />
+                <AvatarImage src={user?.photoURL || undefined} />
                 <AvatarFallback>{user?.displayName?.[0] || 'U'}</AvatarFallback>
               </Avatar>
               <div>
@@ -147,13 +146,13 @@ export default function DashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Saved Properties</CardTitle>
-                <CardDescription>Properties you've saved for later</CardDescription>
+                <CardDescription>Properties you&apos;ve saved for later</CardDescription>
               </CardHeader>
               <CardContent>
                 {savedProperties.length === 0 ? (
                   <div className="text-center py-12">
                     <Heart className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                    <p className="text-gray-600">No saved properties yet</p>
+                    <p className="text-sm text-gray-600">You haven&apos;t saved any properties yet.</p>
                     <Button className="mt-4" onClick={() => router.push('/properties')}>
                       Browse Properties
                     </Button>
@@ -227,7 +226,7 @@ export default function DashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Your Inquiries</CardTitle>
-                <CardDescription>Messages and inquiries you've sent</CardDescription>
+                <CardDescription>Messages and inquiries you&apos;ve sent</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="text-center py-12">

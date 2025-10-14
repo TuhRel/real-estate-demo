@@ -48,9 +48,11 @@ export default function ContactPage() {
       {/* Hero Section */}
       <div className="bg-blue-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Get in Touch</h1>
-          <p className="text-xl text-blue-100">
-            We're here to help you find your dream home
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">
+            Get in Touch
+          </h1>
+          <p className="text-xl text-blue-100 text-center max-w-2xl mx-auto">
+            We&apos;re here to help you find your dream home
           </p>
         </div>
       </div>
@@ -63,13 +65,13 @@ export default function ContactPage() {
               <CardHeader>
                 <CardTitle>Send us a Message</CardTitle>
                 <CardDescription>
-                  Fill out the form below and we'll get back to you as soon as possible
+                  Fill out the form below and we&apos;ll get back to you as soon as possible
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 {success && (
                   <div className="bg-green-50 text-green-600 p-4 rounded-md mb-6">
-                    Thank you for your message! We'll be in touch soon.
+                    Thank you for your message! We&apos;ll be in touch soon.
                   </div>
                 )}
 
@@ -195,6 +197,7 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2 text-sm">
+                  <p className="text-gray-600 mb-3">We&apos;re available Monday-Saturday</p>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Monday - Friday</span>
                     <span className="font-semibold">9:00 AM - 6:00 PM</span>

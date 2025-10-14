@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
-import { Mail, Lock, User as UserIcon, Chrome } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -56,8 +56,8 @@ export default function SignupPage() {
       });
 
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Failed to create account');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Sign up failed');
     } finally {
       setLoading(false);
     }
@@ -83,7 +83,7 @@ export default function SignupPage() {
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
               <div className="relative">
-                <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <Input
                   id="name"
                   type="text"

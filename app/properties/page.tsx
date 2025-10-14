@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PropertyCard from '@/components/PropertyCard';
 import SearchBar from '@/components/SearchBar';
 import { Property } from '@/types';
@@ -45,7 +45,7 @@ export default function PropertiesPage() {
 
   const handleSort = (value: string) => {
     setSortBy(value);
-    let sorted = [...properties];
+    const sorted = [...properties];
     
     switch (value) {
       case 'price-low':

@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       inquiryId: inquiryRef.id,
       message: 'Your message has been sent successfully!',
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error processing contact form:', error);
     return NextResponse.json(
       { error: 'Failed to send message' },

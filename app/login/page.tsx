@@ -26,8 +26,8 @@ export default function LoginPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Failed to login');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to login');
     } finally {
       setLoading(false);
     }
@@ -41,8 +41,8 @@ export default function LoginPage() {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Failed to login with Google');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to login with Google');
     } finally {
       setLoading(false);
     }
@@ -131,7 +131,7 @@ export default function LoginPage() {
           </div>
 
           <p className="mt-6 text-center text-sm text-gray-600">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-blue-600 hover:underline font-semibold">
               Sign up
             </Link>

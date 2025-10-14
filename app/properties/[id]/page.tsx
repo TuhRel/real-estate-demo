@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Bed, Bath, Maximize, MapPin, Heart, Share2, Calendar, 
-  Phone, Mail, Car, Home as HomeIcon, Check 
+  Phone, Mail, Check 
 } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
 
@@ -61,7 +60,6 @@ const mockProperty = {
 };
 
 export default function PropertyDetailPage() {
-  const params = useParams();
   const [selectedImage, setSelectedImage] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);

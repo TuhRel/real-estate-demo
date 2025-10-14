@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Menu, X, Home, Search, User, LogIn, LogOut } from 'lucide-react';
+import { Menu, X, Home, LogOut, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { User } from 'firebase/auth';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState<any>(null); // Replace with actual auth state
+  const [user] = useState<User | null>(null); // Replace with actual auth state
 
   return (
     <nav className="bg-white border-b sticky top-0 z-50">
@@ -49,7 +50,7 @@ export default function Navbar() {
               <>
                 <Link href="/dashboard">
                   <Avatar className="cursor-pointer">
-                    <AvatarImage src={user?.photoURL} />
+                    <AvatarImage src={user?.photoURL || undefined} />
                     <AvatarFallback>{user?.displayName?.[0] || 'U'}</AvatarFallback>
                   </Avatar>
                 </Link>
